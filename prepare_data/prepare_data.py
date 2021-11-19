@@ -27,11 +27,6 @@ class PrepareData(object):
             else:
                 shutil.move(absolute_path, kwargs['dst2']+image)
 
-
-
-
-
-
     @staticmethod
     def _list_images(path):
         tmpList = []
