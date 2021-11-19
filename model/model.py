@@ -1,13 +1,12 @@
-from abc import ABC, ABCMeta
+from abc import ABC
 
 from tensorflow.keras import Model
-from tensorflow.keras.layers import Layer
-from tensorflow.keras.layers import BatchNormalization, Flatten, Conv2D, UpSampling2D, AveragePooling2D, Input
+from tensorflow.keras.layers import BatchNormalization, Conv2D, UpSampling2D, AveragePooling2D
 import tensorflow as tf
 from tensorflow.python.keras.utils.layer_utils import print_summary
 
 
-class Autoencoder(Model):
+class Autoencoder(Model, ABC):
     def __init__(self):
         super(Autoencoder, self).__init__()
         self.encoder = tf.keras.Sequential([
