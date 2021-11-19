@@ -1,1 +1,1 @@
-from prepare_data.prepare_data import  PrepareData
+from prepare_data.prepare_data import PrepareData

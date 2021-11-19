@@ -22,7 +22,7 @@ class PrepareData(object):
         for image in self.images:
             absolute_path = os.path.join(self._path, image)
             im = Image.open(absolute_path)
-            if w < im.size[0]:
+            if w < im.size[0] and h < im.size[1]:
                 shutil.move(absolute_path, kwargs['dst1']+image)
             else:
                 shutil.move(absolute_path, kwargs['dst2']+image)
