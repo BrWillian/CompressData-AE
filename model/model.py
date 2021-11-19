@@ -10,7 +10,11 @@ class Autoencoder(Model, ABC):
     def __init__(self):
         super(Autoencoder, self).__init__()
         self.encoder = tf.keras.Sequential([
-            Conv2D(512, (3, 3), activation='relu', padding='same', input_shape=(1280, 1012, 3)),
+            Conv2D(1024, (3, 3), activation='relu', padding='same', input_shape=(1280, 1012, 3)),
+            BatchNormalization(),
+            AveragePooling2D((2, 2), padding='same'),
+
+            Conv2D(512, (3, 3), activation='relu', padding='same'),
             BatchNormalization(),
             AveragePooling2D((2, 2), padding='same'),
 
@@ -25,7 +29,7 @@ class Autoencoder(Model, ABC):
         name="Encoder")
 
         self.decoder = tf.keras.Sequential([
-            Conv2D(128, (3, 3), activation='relu', padding='same', input_shape=(160, 127, 128)),
+            Conv2D(128, (3, 3), activation='relu', padding='same', input_shape=(80, 64, 128)),
             BatchNormalization(),
             UpSampling2D((2, 2)),
 
@@ -34,6 +38,10 @@ class Autoencoder(Model, ABC):
             UpSampling2D((2, 2)),
 
             Conv2D(512, (3, 3), activation='relu', padding='same'),
+            BatchNormalization(),
+            UpSampling2D((2, 2)),
+
+            Conv2D(1024, (3, 3), activation='relu', padding='same'),
             BatchNormalization(),
             UpSampling2D((2, 2)),
 
