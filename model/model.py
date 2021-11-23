@@ -9,6 +9,7 @@ from model.activations import Mish
 class Autoencoder(Model, ABC):
     def __init__(self):
         super(Autoencoder, self).__init__()
+        print(self._input_spec)
         self.encoder = tf.keras.Sequential([
             Conv2D(1024, (3, 3), activation=Mish(), padding='same', input_shape=(1280, 1012, 3)),
             BatchNormalization(),
