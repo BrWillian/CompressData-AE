@@ -9,6 +9,7 @@ class DatasetGenerator:
         self.batch_size = batch_size
         self.size = (size[0], size[1])
         self.shape = "({}, {}, {}, {})".format(batch_size, size[0], size[1], size[2])
+        self.len_data = 0
 
     @staticmethod
     def list_dir(path):
@@ -21,16 +22,16 @@ class DatasetGenerator:
         return data
 
     def create_dataset(self):
-        data = DatasetGenerator.list_dir(self.image_path)
-        while True:
-            for start in range(0, len(data), self.batch_size):
-                x_batch = []
-                end = min(start + self.batch_size, len(data))
-                id_train_batch = data[start:end]
-                for id in id_train_batch:
-                    img = cv2.imread(self.image_path + '{}.jpg'.format(id), cv2.COLOR_BGR2RGB)
-                    img = cv2.resize(img, self.size, interpolation=cv2.INTER_AREA)
-                    x_batch.append(img)
+        img_data_array = []
+        img_folder = self.image_path
 
-                x_batch = np.array(x_batch, np.float32) / 255
-                yield x_batch
+        for root, dirs, files in os.walk(img_folder):
+            for file in files:
+                image_path = os.path.join(root, file)
+                image = cv2.imread(image_path, cv2.COLOR_BGR2RGB)
+                image = cv2.resize(image, self.size, interpolation=cv2.INTER_AREA)
+                image = np.array(image)
+                image = image.astype('float32')
+                image /= 255
+                img_data_array.append(image)
+        return img_data_array
