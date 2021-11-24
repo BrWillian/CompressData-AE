@@ -5,6 +5,7 @@ from view_dataset import view_dataset_representation
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import mse
 import numpy as np
+import tensorflow as tf
 
 
 dataset_folder = "/media/Shared Disk/Dataset/high/"
@@ -16,9 +17,13 @@ dataset_folder = "/media/Shared Disk/Dataset/high/"
 
 
 #view_dataset_representation(dataset_folder, n_samples=10)
-model = Autoencoder()
-model.build(input_shape=(None, 1280, 1012, 3))
-model.summary()
+
+mirrored_strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
+
+with mirrored_strategy.scope():
+    model = Autoencoder()
+    model.build(input_shape=(None, 1280, 1012, 3))
+    model.summary()
 
 
 Datagen = DatasetGenerator(dataset_folder)
