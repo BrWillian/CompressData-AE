@@ -35,3 +35,21 @@ class DatasetGenerator:
                 image /= 255
                 img_data_array.append(image)
         return img_data_array
+
+    def create_dataset_autogen(self):
+        data = DatasetGenerator.list_dir(self.image_path)
+        while True:
+            for start in range(0, len(data), self.batch_size):
+                x_batch = []
+                y_batch = []
+                end = min(start + self.batch_size, len(data))
+                id_train_batch = data[start:end]
+                for id in id_train_batch:
+                    x = cv2.imread(self.image_path + '{}.jpg'.format(id))
+                    x = cv2.resize(x, self.size)
+                    x_batch.append(x)
+                    y_batch.append(x)
+
+                x_batch = np.array(x_batch, np.float32) / 255
+                y_batch = np.array(y_batch, np.float32) / 255
+                yield x_batch, y_batch
