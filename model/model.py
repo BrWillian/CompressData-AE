@@ -98,7 +98,3 @@ class CAE(Model):
         code = self.encoder(features)
         reconstructed = self.decoder(code)
         return reconstructed
-
-    def summary(self, **kwargs):
-        print_summary(self.encoder)
-        print_summary(self.decoder)
