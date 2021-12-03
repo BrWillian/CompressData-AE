@@ -1,5 +1,5 @@
 import prepare_data
-from model.model import Autoencoder
+from model.model import CAE
 from prepare_data import DatasetGenerator
 from view_dataset import view_dataset_representation
 from tensorflow.keras.optimizers import Adam
@@ -18,12 +18,11 @@ dataset_folder = "/media/Shared Disk/Dataset/high/"
 
 #view_dataset_representation(dataset_folder, n_samples=10)
 
-mirrored_strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
+#mirrored_strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
 
-with mirrored_strategy.scope():
-    model = Autoencoder()
-    model.build(input_shape=(None, 1280, 1012, 3))
-    model.summary()
+
+model = CAE(input_shape=(28, 28, 3))
+model.summary()
 
 
 Datagen = DatasetGenerator(dataset_folder)

@@ -1,2 +1,2 @@
-from model.model import Autoencoder
+from model.model import CAE
 from model.activations import Mish
