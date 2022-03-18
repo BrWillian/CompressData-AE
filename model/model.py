@@ -16,17 +16,17 @@ class Encoder(Model):
         self.input_layer = InputLayer(input_shape=kwargs.get('input_shape'))
 
         # Block1
-        self.conv_1 = Conv2D(128, (3, 3), activation=Mish(), padding='same')
+        self.conv_1 = Conv2D(64, (3, 3), activation=Mish(), padding='same')
         self.batch_1 = BatchNormalization()
         self.avg_polling_1 = AveragePooling2D((2, 2), padding='same')
 
         # Block2
-        self.conv_2 = Conv2D(64, (3, 3), activation=Mish(), padding='same')
+        self.conv_2 = Conv2D(32, (3, 3), activation=Mish(), padding='same')
         self.batch_2 = BatchNormalization()
         self.avg_polling_2 = AveragePooling2D((2, 2), padding='same')
 
         # Block3
-        self.conv_3 = Conv2D(32, (3, 3), activation=Mish(), padding='same')
+        self.conv_3 = Conv2D(16, (3, 3), activation=Mish(), padding='same')
         self.batch_3 = BatchNormalization()
         self.avg_polling_3 = AveragePooling2D((2, 2), padding='same')
 
@@ -52,17 +52,17 @@ class Decoder(Model):
     def __init__(self, **kwargs):
         super(Decoder, self).__init__()
 
-        self.conv_1 = Conv2D(32, (3, 3), activation=Mish(), padding='same')
+        self.conv_1 = Conv2D(16, (3, 3), activation=Mish(), padding='same')
         self.batch_1 = BatchNormalization()
         self.upsampling_1 = UpSampling2D((2, 2))
 
         # Block2
-        self.conv_2 = Conv2D(64, (3, 3), activation=Mish(), padding='same')
+        self.conv_2 = Conv2D(32, (3, 3), activation=Mish(), padding='same')
         self.batch_2 = BatchNormalization()
         self.upsampling_2 = UpSampling2D((2, 2))
 
         # Block3
-        self.conv_3 = Conv2D(128, (3, 3), activation=Mish(), padding='same')
+        self.conv_3 = Conv2D(64, (3, 3), activation=Mish(), padding='same')
         self.batch_3 = BatchNormalization()
         self.upsampling_3 = UpSampling2D((2, 2))
 

@@ -4,7 +4,7 @@ import os
 
 
 class DatasetGenerator:
-    def __init__(self, image_path, batch_size=32, size=(1280, 1012, 3)):
+    def __init__(self, image_path, batch_size=32, size=(28, 28, 3)):
         self.image_path = image_path
         self.batch_size = batch_size
         self.size = (size[0], size[1])
@@ -46,9 +46,13 @@ class DatasetGenerator:
                 id_train_batch = data[start:end]
                 for id in id_train_batch:
                     x = cv2.imread(self.image_path + '{}.jpg'.format(id))
-                    x = cv2.resize(x, self.size)
+                    x = cv2.resize(x, (28, 28))
+                    y = cv2.imread(self.image_path + '{}.jpg'.format(id), cv2.IMREAD_GRAYSCALE)
+                    y = cv2.resize(y, (28, 28))
+                    y = np.expand_dims(y, axis=2)
+                    print(x.shape)
                     x_batch.append(x)
-                    y_batch.append(x)
+                    y_batch.append(y)
 
                 x_batch = np.array(x_batch, np.float32) / 255
                 y_batch = np.array(y_batch, np.float32) / 255
